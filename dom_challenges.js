@@ -151,3 +151,53 @@ function displayArticles(category) {
 
 // Show initial articles
 displayArticles('Latest News');
+function displayArticles(category) {
+  const newsContainer = document.querySelector('#news-container');
+  const articles = newsData[category];
+
+  // Clear previous content
+  newsContainer.innerHTML = '';
+
+  // Create featured article
+  const featuredArticle = articles[0]; // Assuming the first article is the featured one
+  const featuredArticleDiv = document.createElement('div');
+  featuredArticleDiv.classList.add('featured-article');
+
+  // Fill in featured article data
+  featuredArticleDiv.innerHTML = `
+    <img src="${featuredArticle.image}" alt="${featuredArticle.title}">
+    <h2>${featuredArticle.title}</h2>
+    <p>${featuredArticle.excerpt}</p>
+    <span>${featuredArticle.date} - ${featuredArticle.tag}</span>
+  `;
+
+  // Add featured article to container
+  newsContainer.appendChild(featuredArticleDiv);
+
+  // Create grid for remaining articles
+  const newsGrid = document.createElement('div');
+  newsGrid.classList.add('news-grid');
+
+  // Create remaining article cards
+  for (let i = 1; i < articles.length; i++) { // Start from 1 to skip the featured article
+    const article = articles[i];
+    const articleCard = document.createElement('div');
+    articleCard.classList.add('article-card');
+
+    articleCard.innerHTML = `
+      <img src="${article.image}" alt="${article.title}">
+      <h3>${article.title}</h3>
+      <p>${article.excerpt}</p>
+      <span>${article.date} - ${article.tag}</span>
+    `;
+
+    // Add article card to grid
+    newsGrid.appendChild(articleCard);
+  }
+
+  // Add grid to container
+  newsContainer.appendChild(newsGrid);
+}
+
+// Show initial articles
+displayArticles('Latest News');
